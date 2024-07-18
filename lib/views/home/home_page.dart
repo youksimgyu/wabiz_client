@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:wabiz_client/theme.dart';
 import 'package:wabiz_client/view_model/home/home_view_model.dart';
@@ -89,7 +90,11 @@ class HomePage extends StatelessWidget {
                               mainAxisSpacing: 0,
                             ),
                             itemBuilder: (context, index) {
+                              final result = data[index];
                               return InkWell(
+                                onTap: () {
+                                  context.push('/home/category/${result.id}');
+                                },
                                 child: Column(
                                   children: [
                                     CircleAvatar(
@@ -241,8 +246,8 @@ class HomePage extends StatelessWidget {
                                                   project?.isOpen == "close"
                                                       ? '오픈예정'
                                                       : '바로구매',
-                                                  style:
-                                                      TextStyle(fontSize: 10),
+                                                  style: const TextStyle(
+                                                      fontSize: 10),
                                                 ),
                                               ),
                                             ],
