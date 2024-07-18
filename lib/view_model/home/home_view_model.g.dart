@@ -24,7 +24,7 @@ final fetchHomeCategoriesProvider =
 
 typedef FetchHomeCategoriesRef
     = AutoDisposeFutureProviderRef<List<ProjectCategory>>;
-String _$homeViewModelHash() => r'18af562f84d58776116bce04626d8dba6c40d7ba';
+String _$homeViewModelHash() => r'84c5c6222885e5e810caaafeb7120d4c31db4375';
 
 /// See also [HomeViewModel].
 @ProviderFor(HomeViewModel)
