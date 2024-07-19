@@ -7,7 +7,7 @@ part of 'category_repository.dart';
 // **************************************************************************
 
 String _$categoryRepositoryHash() =>
-    r'e8bc347103320245a7e9a8ad785b52c0cf8b635f';
+    r'a2160ef2fa165f923733b06606461ddbe496bf44';
 
 /// See also [categoryRepository].
 @ProviderFor(categoryRepository)
