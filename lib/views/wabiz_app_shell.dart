@@ -16,6 +16,14 @@ class WabizAppShell extends StatefulWidget {
 }
 
 class _WabizAppShellState extends State<WabizAppShell> {
+  void _onItemTap(int index, BuildContext context) {
+    if (index == 3) {
+      GoRouter.of(context).go('/my');
+    } else {
+      GoRouter.of(context).go('/home');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +31,7 @@ class _WabizAppShellState extends State<WabizAppShell> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: widget.currentIndex,
         onTap: (value) {
-          GoRouter.of(context).go('/home');
+          _onItemTap(value, context);
         },
         items: [
           const BottomNavigationBarItem(
@@ -38,7 +46,7 @@ class _WabizAppShellState extends State<WabizAppShell> {
               icon: Icon(widget.currentIndex == 3
                   ? Icons.person
                   : Icons.person_2_outlined),
-              label: "구독"),
+              label: "마이페이지"),
         ],
       ),
     );

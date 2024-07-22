@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wabiz_client/views/category/category_page.dart';
 import 'package:wabiz_client/views/home/home_page.dart';
+import 'package:wabiz_client/views/my/my_page.dart';
 import 'package:wabiz_client/views/wabiz_app_shell.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -15,7 +16,10 @@ final router = GoRouter(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
         return WabizAppShell(
-          currentIndex: 0,
+          currentIndex: switch (state.uri.path) {
+            var path when path.startsWith("/my") => 3,
+            _ => 0,
+          },
           child: child,
         );
       },
@@ -33,6 +37,11 @@ final router = GoRouter(
               },
             )
           ],
+        ),
+        GoRoute(
+          path: '/my',
+          parentNavigatorKey: _shellNavigatorKey,
+          builder: (context, state) => const MyPage(),
         ),
       ],
     ),
