@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wabiz_client/theme.dart';
 
 class MyPage extends StatefulWidget {
@@ -43,7 +44,9 @@ class _MyPageState extends State<MyPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              context.push('/sign-up');
+                            },
                             child: const Row(
                               children: [
                                 Text('로그인하기'),
