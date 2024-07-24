@@ -13,7 +13,7 @@ class _LoginApi implements LoginApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://localhost:3000/api/v1';
+    baseUrl ??= 'http://localhost:3000/api/v1';
   }
 
   final Dio _dio;
@@ -35,6 +35,33 @@ class _LoginApi implements LoginApi {
             .compose(
               _dio.options,
               '/signup',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final _value = ResponseModel.fromJson(_result.data!);
+    return _value;
+  }
+
+  @override
+  Future<ResponseModel> checkEmail(LoginModel body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ResponseModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/checkauth',
               queryParameters: queryParameters,
               data: _data,
             )

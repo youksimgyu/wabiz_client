@@ -6,11 +6,11 @@ part of 'login_api_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginApiHash() => r'72f41df61d72a150cc8ec54f4f6e24b7cdcb90a2';
+String _$loginApiHash() => r'578b9cf11c0053198d160c5b76328e962f20f6a1';
 
 /// See also [loginApi].
 @ProviderFor(loginApi)
-final loginApiProvider = AutoDisposeProvider<LoginApi>.internal(
+final loginApiProvider = Provider<LoginApi>.internal(
   loginApi,
   name: r'loginApiProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final loginApiProvider = AutoDisposeProvider<LoginApi>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef LoginApiRef = AutoDisposeProviderRef<LoginApi>;
+typedef LoginApiRef = ProviderRef<LoginApi>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
