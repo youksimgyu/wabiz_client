@@ -169,6 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.visibility),
@@ -193,6 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide.none,
                     ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.visibility),
