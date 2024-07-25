@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wabiz_client/view_model/login/login_view_model.dart';
 
 import '../../theme.dart';
 
@@ -84,6 +85,16 @@ class _SignInPageState extends State<SignInPage> {
                     if (emailTextController.text.isEmpty ||
                         passwordTextController.text.isEmpty) {
                       return;
+                    }
+                    final result =
+                        await ref.read(loginViewModelProvider.notifier).signIn(
+                              emailTextController.text.trim(),
+                              passwordTextController.text.trim(),
+                            );
+                    if (result != null) {
+                      if (context.mounted) {
+                        context.go("/my");
+                      }
                     }
                   },
                   child: Container(

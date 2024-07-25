@@ -14,6 +14,12 @@ abstract class LoginApi {
     @Body() LoginModel body,
   );
 
+  // model 없을 경우
+  @POST("/signin")
+  Future<HttpResponse<dynamic>> signIn(
+    @Body() LoginModel body,
+  );
+
   @GET('/checkauth')
   Future<ResponseModel> checkEmail(
     @Body() LoginModel body,
