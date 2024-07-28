@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:wabiz_client/models/project/project_model.dart';
 import 'package:wabiz_client/shared/enum/enum_project_class.dart';
 import 'package:wabiz_client/shared/model/project_type.dart';
 import 'package:wabiz_client/theme.dart';
+import 'package:wabiz_client/view_model/login/login_view_model.dart';
+import 'package:wabiz_client/view_model/project/project_view_model.dart';
 
 class AddProjectPage extends StatefulWidget {
   const AddProjectPage({super.key});
@@ -58,14 +64,81 @@ class _AddProjectPageState extends State<AddProjectPage> {
               ),
               const Gap(12),
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.white,
                       builder: (context) {
-                        return Container();
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height - 240,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      '카테고리',
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        context.pop();
+                                      },
+                                      icon: const Icon(Icons.clear),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Consumer(
+                                  builder: (context, ref, child) {
+                                    final types =
+                                        ref.watch(fetchProjectTypesProvider);
+                                    return types.when(
+                                        data: (data) {
+                                          return ListView.separated(
+                                            itemCount: data.length,
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const Divider(),
+                                            itemBuilder: (context, index) {
+                                              final value = data[index];
+                                              return ListTile(
+                                                leading: SvgPicture.asset(
+                                                    value.imagePath ?? ''),
+                                                title: Text(value.type ?? ''),
+                                                onTap: () {
+                                                  setState(() {
+                                                    projectType = value;
+                                                  });
+                                                  context.pop();
+                                                },
+                                              );
+                                            },
+                                          );
+                                        },
+                                        error: (error, stackTrace) => Center(
+                                              child: Text(
+                                                  'Error: $error, StackTrace: $stackTrace'),
+                                            ),
+                                        loading: () => const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       });
                 },
                 child: Container(
+                  height: 50,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.wabizGray[200]!),
@@ -76,10 +149,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                     children: [
                       Text(
                           '${projectType != null ? projectType?.type : '카테고리 선택'}'),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                      ),
+                      const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),
                 ),
@@ -304,24 +374,76 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 maxLength: 100,
               ),
               const Gap(24),
-              MaterialButton(
-                onPressed: () {},
-                height: 50,
-                minWidth: double.infinity,
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                color: AppColors.primary,
-                child: const Text(
-                  '저장히기',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 16,
+              Consumer(builder: (context, ref, child) {
+                return MaterialButton(
+                  onPressed: () async {
+                    final _image = await image?.readAsBytes();
+                    final response = await ref
+                        .read(projectViewModelProvider.notifier)
+                        .createProject(
+                          ProjectItemModel(
+                            categoryId: 1,
+                            projectTypeId: projectType?.id,
+                            title: titleTextEditController.text.trim(),
+                            owner: makerTextEditController.text.trim(),
+                            deadline: deadlineTextEditController.text.trim(),
+                            description:
+                                descriptionTextEditController.text.trim(),
+                            price:
+                                int.parse(priceTextEditController.text.trim()),
+                            projectClass: enumProjectClass.title,
+                            userId: ref
+                                .read(loginViewModelProvider)
+                                .userid
+                                .toString(),
+                            projectImage: _image ?? [],
+                          ),
+                        );
+                    if (response) {
+                      if (context.mounted) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('안내'),
+                            content: const Text('프로젝트 정보 등록 성공'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  context.go('/my');
+                                },
+                                child: const Text('마이페이지'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    } else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('처리 실패'),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  height: 50,
+                  minWidth: double.infinity,
+                  elevation: 1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                ),
-              ),
+                  color: AppColors.primary,
+                  child: const Text(
+                    '저장히기',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

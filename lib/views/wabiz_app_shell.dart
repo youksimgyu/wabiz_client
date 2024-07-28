@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wabiz_client/view_model/login/login_view_model.dart';
 
-class WabizAppShell extends StatefulWidget {
+class WabizAppShell extends ConsumerStatefulWidget {
   const WabizAppShell({
     super.key,
     required this.child,
@@ -12,17 +14,28 @@ class WabizAppShell extends StatefulWidget {
   final int currentIndex;
 
   @override
-  State<WabizAppShell> createState() => _WabizAppShellState();
+  ConsumerState<WabizAppShell> createState() => _WabizAppShellState();
 }
 
-class _WabizAppShellState extends State<WabizAppShell> {
+class _WabizAppShellState extends ConsumerState<WabizAppShell> {
   void _onItemTap(int index, BuildContext context) {
     switch (index) {
       case 0:
         context.go('/home');
         break;
       case 1:
-        context.push('/add');
+        if (ref.read(loginViewModelProvider).isLogin) {
+          context.push('/add');
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const AlertDialog(
+                content: Text('로그인 후 이용해주세요.'),
+              );
+            },
+          );
+        }
         break;
       case 2:
         context.go('/subscription');

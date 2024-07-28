@@ -173,7 +173,6 @@ class _MyPageState extends State<MyPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        context.push('/add/reward/0');
                         if (!(myPageState.loginState ?? true)) {
                           showDialog(
                             context: context,
@@ -183,8 +182,10 @@ class _MyPageState extends State<MyPage> {
                               );
                             },
                           );
+                          return;
+                        } else {
+                          context.push('/add/reward/0');
                         }
-                        return;
                       },
                       child: Container(
                         height: 50,

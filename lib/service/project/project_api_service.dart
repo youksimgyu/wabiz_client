@@ -7,12 +7,12 @@ part 'project_api_service.g.dart';
 
 @riverpod
 ProjectApi projectApiService(ProjectApiServiceRef ref) {
-  final dio = ref.read(dioProvider);
+  final dio = ref.watch(dioProvider);
   var localhost = "localhost";
 
   if (defaultTargetPlatform == TargetPlatform.android) {
     localhost = "10.0.2.2";
   }
 
-  return ProjectApi(dio, baseUrl: "https://$localhost:3000/api/v1");
+  return ProjectApi(dio, baseUrl: "http://$localhost:3000/api/v1");
 }
