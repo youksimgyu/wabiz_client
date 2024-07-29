@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -147,8 +149,8 @@ class HomePage extends StatelessWidget {
                     future: project,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        final data = snapshot.data;
-                        if (data?.projects.isEmpty ?? true) {
+                        final data = snapshot.data!;
+                        if (data.projects.isEmpty) {
                           return Column(
                             children: [
                               const Text('데이터가 없습니다.'),
@@ -164,8 +166,14 @@ class HomePage extends StatelessWidget {
                             child: ListView.builder(
                               itemCount: 10,
                               itemBuilder: (context, index) {
-                                final project = data?.projects[index];
+                                final project = data.projects[index];
                                 return InkWell(
+                                  onTap: () {
+                                    context.push(
+                                      '/detail',
+                                      extra: json.encode(project.toJson()),
+                                    );
+                                  },
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.white,
