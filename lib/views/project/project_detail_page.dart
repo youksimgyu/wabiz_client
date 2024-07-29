@@ -126,17 +126,19 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       ),
                     ),
                     const Gap(12),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      decoration: BoxDecoration(
-                        color: AppColors.bg,
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                      child: Text(
-                        '${NumberFormat('###,###,###').format(projectItemModel.totalFundedCount)} 명 참여',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.bg,
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: Text(
+                          '${NumberFormat('###,###,###').format(projectItemModel.totalFundedCount)} 명 참여',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ),
