@@ -207,7 +207,7 @@ class HomePage extends StatelessWidget {
                                             ),
                                             image: DecorationImage(
                                               image: CachedNetworkImageProvider(
-                                                  project?.thumbnail ?? ''),
+                                                  project.thumbnail ?? ''),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -219,9 +219,9 @@ class HomePage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                project?.isOpen == "close"
-                                                    ? "${numberFormatter.format(project?.waitlistCount)}명이 기다려요."
-                                                    : "${numberFormatter.format(project?.totalFundedCount)}명이 인증했어요.",
+                                                project.isOpen == "close"
+                                                    ? "${numberFormatter.format(project.waitlistCount)}명이 기다려요."
+                                                    : "${numberFormatter.format(project.totalFundedCount)}명이 인증했어요.",
                                                 style: const TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w700,
@@ -229,11 +229,11 @@ class HomePage extends StatelessWidget {
                                                 ),
                                               ),
                                               const Gap(8),
-                                              Text(project?.title ??
+                                              Text(project.title ??
                                                   '아이돌 관리비법 | 준비 안된 얼굴라인도 살리는 세럼'),
                                               const Gap(16),
                                               Text(
-                                                project?.owner ?? '세상에 없던 브랜드',
+                                                project.owner ?? '세상에 없던 브랜드',
                                                 style: TextStyle(
                                                   color:
                                                       AppColors.wabizGray[500]!,
@@ -251,7 +251,7 @@ class HomePage extends StatelessWidget {
                                                         horizontal: 6,
                                                         vertical: 4),
                                                 child: Text(
-                                                  project?.isOpen == "close"
+                                                  project.isOpen == "close"
                                                       ? '오픈예정'
                                                       : '바로구매',
                                                   style: const TextStyle(
