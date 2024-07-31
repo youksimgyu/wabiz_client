@@ -10,6 +10,11 @@ part 'project_api.g.dart';
 abstract class ProjectApi {
   factory ProjectApi(Dio dio, {String baseUrl}) = _ProjectApi;
 
+  @GET("/project/{id}")
+  Future<ProjectModel> getProjectByProjectId(
+    @Path() String id,
+  );
+
   @POST("/project")
   Future<ResponseModel> createProject(
     @Body() ProjectItemModel body,

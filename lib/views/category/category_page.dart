@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -203,8 +204,6 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Consumer(builder: (context, ref, child) {
-                  // final projects = ref.watch(
-                  //     fetchCategoryProjectsByTypeProvider(widget.categoryId));
                   final projects =
                       ref.watch(categoryViewModelProvider).projectState;
                   return projects.when(
@@ -257,12 +256,16 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                           Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              // itemCount: data.projects.length,
                               itemCount: data.length,
                               itemBuilder: (context, index) {
                                 final project = data[index];
                                 return InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    context.push(
+                                      '/detail',
+                                      extra: json.encode(project.toJson()),
+                                    );
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.only(bottom: 24),
                                     child: Row(

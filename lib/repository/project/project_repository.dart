@@ -18,6 +18,11 @@ class ProjectRepository {
 
   ProjectRepository(this.projectApi);
 
+  Future<ProjectModel> getProjectByProjectId(String id) async {
+    final result = await projectApi.getProjectByProjectId(id);
+    return result;
+  }
+
   Future<ResponseModel> createProject(ProjectItemModel body) async {
     final result = await projectApi.createProject(body);
     return result;
