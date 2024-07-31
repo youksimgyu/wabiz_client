@@ -59,7 +59,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       ),
       body: Consumer(builder: (context, ref, child) {
         final project = ref.watch(
-            FetchProjectByProjectIdProvider(projectItemModel.id.toString()));
+            ProjectDetailViewModelProvider(projectItemModel.id.toString()));
         return project.when(
           data: (data) {
             return Column(
@@ -91,8 +91,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                               physics: !value
                                   ? const NeverScrollableScrollPhysics()
                                   : const BouncingScrollPhysics(),
-                              child: ProjectWidget(
-                                  projectItemModel: data.data.first),
+                              child: ProjectWidget(projectItemModel: data),
                             )),
                             if (!value)
                               Positioned(
