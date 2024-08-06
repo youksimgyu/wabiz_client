@@ -38,7 +38,7 @@ class _WabizAppShellState extends ConsumerState<WabizAppShell> {
         }
         break;
       case 2:
-        context.go('/subscription');
+        context.go('/favorite');
         break;
       case 3:
         context.go('/my');
