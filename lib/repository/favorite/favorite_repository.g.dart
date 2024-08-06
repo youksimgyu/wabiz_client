@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'shared_pref_provider.dart';
+part of 'favorite_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sharedPreferencesHash() => r'59a62e1d727060b711d4d0283bacbb1bbf332468';
+String _$favoriteRepositoryHash() =>
+    r'32ec038b441e55c1e5f31882f86d93cd082cfc92';
 
-/// See also [sharedPreferences].
-@ProviderFor(sharedPreferences)
-final sharedPreferencesProvider =
-    AutoDisposeProvider<SharedPreferences>.internal(
-  sharedPreferences,
-  name: r'sharedPreferencesProvider',
+/// See also [favoriteRepository].
+@ProviderFor(favoriteRepository)
+final favoriteRepositoryProvider =
+    AutoDisposeProvider<FavoriteRepository>.internal(
+  favoriteRepository,
+  name: r'favoriteRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$sharedPreferencesHash,
+      : _$favoriteRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef SharedPreferencesRef = AutoDisposeProviderRef<SharedPreferences>;
+typedef FavoriteRepositoryRef = AutoDisposeProviderRef<FavoriteRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
