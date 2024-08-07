@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:wabiz_client/theme.dart';
 import 'package:wabiz_client/view_model/category_view_model/category_view_model.dart';
+import 'package:wabiz_client/view_model/favorite/favorite_view_model.dart';
 
 class CategoryPage extends ConsumerStatefulWidget {
   const CategoryPage({
@@ -292,12 +293,65 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                               Positioned(
                                                 right: 2,
                                                 top: 2,
-                                                child: IconButton(
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                    Icons.favorite_border,
-                                                  ),
-                                                ),
+                                                child: Consumer(builder:
+                                                    (context, ref, child) {
+                                                  final favorites = ref.watch(
+                                                      favoriteViewModelProvider);
+                                                  final current = favorites
+                                                      .projects
+                                                      .where((element) =>
+                                                          element.id ==
+                                                          project.id)
+                                                      .toList();
+                                                  return IconButton(
+                                                    onPressed: () {
+                                                      if (current.isNotEmpty) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return AlertDialog(
+                                                              content: const Text(
+                                                                  '구독을 취소할까요?'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    ref
+                                                                        .read(favoriteViewModelProvider
+                                                                            .notifier)
+                                                                        .removeItem(
+                                                                            project);
+                                                                    context
+                                                                        .pop();
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          '네'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        );
+                                                        return;
+                                                      }
+
+                                                      ref
+                                                          .read(
+                                                              favoriteViewModelProvider
+                                                                  .notifier)
+                                                          .addItem(project);
+                                                    },
+                                                    icon: Icon(
+                                                      current.isNotEmpty
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_border,
+                                                    ),
+                                                    color: current.isNotEmpty
+                                                        ? Colors.red
+                                                        : Colors.white,
+                                                  );
+                                                }),
                                               ),
                                             ],
                                           ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:wabiz_client/models/category/category_model.dart';
 import 'package:wabiz_client/models/project/project_model.dart';
 import 'package:wabiz_client/theme.dart';
+import 'package:wabiz_client/view_model/favorite/favorite_view_model.dart';
 
 class ProjectWidget extends StatelessWidget {
   const ProjectWidget({
@@ -136,11 +140,20 @@ class ProjectWidget extends StatelessWidget {
   }
 }
 
-class BottomAppBarWidget extends StatelessWidget {
-  const BottomAppBarWidget({super.key});
+class BottomAppBarWidget extends ConsumerWidget {
+  const BottomAppBarWidget({
+    super.key,
+    required this.projectItemModel,
+  });
+
+  final ProjectItemModel projectItemModel;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favorites = ref.watch(favoriteViewModelProvider);
+    final current = favorites.projects
+        .where((element) => element.id == projectItemModel.id)
+        .toList();
     return BottomAppBar(
       height: 84,
       color: Colors.white,
@@ -160,8 +173,50 @@ class BottomAppBarWidget extends StatelessWidget {
             Column(
               children: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.favorite_border),
+                  onPressed: () {
+                    if (current.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('안내'),
+                            content: const Text('구독을 취소할까요?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  ref
+                                      .read(favoriteViewModelProvider.notifier)
+                                      .removeItem(
+                                        CategoryItemModel(
+                                          id: projectItemModel.id,
+                                        ),
+                                      );
+                                  context.pop();
+                                },
+                                child: const Text('네'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    ref.read(favoriteViewModelProvider.notifier).addItem(
+                          CategoryItemModel(
+                            id: projectItemModel.id,
+                            thumbnail: projectItemModel.thumbnail,
+                            description: projectItemModel.description,
+                            title: projectItemModel.title,
+                            owner: projectItemModel.owner,
+                            price: projectItemModel.price,
+                            totalFunded: projectItemModel.totalFunded,
+                            totalFundedCount: projectItemModel.totalFundedCount,
+                          ),
+                        );
+                  },
+                  icon: Icon(current.isNotEmpty
+                      ? Icons.favorite
+                      : Icons.favorite_border),
+                  color: current.isNotEmpty ? Colors.red : Colors.black,
                 ),
                 const Text('1만+'),
               ],

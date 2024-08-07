@@ -169,7 +169,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           ),
         );
       }),
-      bottomNavigationBar: const BottomAppBarWidget(),
+      bottomNavigationBar:
+          BottomAppBarWidget(projectItemModel: projectItemModel),
     );
   }
 }
