@@ -81,15 +81,13 @@ class _SignInPageState extends State<SignInPage> {
               Consumer(builder: (context, ref, child) {
                 return GestureDetector(
                   onTap: () async {
-                    if (emailTextController.text.isEmpty ||
-                        passwordTextController.text.isEmpty) {
+                    if (emailTextController.text.isEmpty || passwordTextController.text.isEmpty) {
                       return;
                     }
-                    final result =
-                        await ref.read(loginViewModelProvider.notifier).signIn(
-                              emailTextController.text.trim(),
-                              passwordTextController.text.trim(),
-                            );
+                    final result = await ref.read(loginViewModelProvider.notifier).signIn(
+                          emailTextController.text.trim(),
+                          passwordTextController.text.trim(),
+                        );
                     if (result != null) {
                       if (context.mounted) {
                         context.go("/my");

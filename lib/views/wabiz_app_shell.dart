@@ -58,19 +58,12 @@ class _WabizAppShellState extends ConsumerState<WabizAppShell> {
           _onItemTap(value, context);
         },
         items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled), label: "홈"),
+          const BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "홈"),
           const BottomNavigationBarItem(icon: Icon(Icons.add), label: "프로젝트"),
           BottomNavigationBarItem(
-              icon: Icon(widget.currentIndex == 2
-                  ? Icons.favorite
-                  : Icons.favorite_border),
-              label: "구독"),
+              icon: Icon(widget.currentIndex == 2 ? Icons.favorite : Icons.favorite_border), label: "구독"),
           BottomNavigationBarItem(
-              icon: Icon(widget.currentIndex == 3
-                  ? Icons.person
-                  : Icons.person_2_outlined),
-              label: "마이페이지"),
+              icon: Icon(widget.currentIndex == 3 ? Icons.person : Icons.person_2_outlined), label: "마이페이지"),
         ],
       ),
     );

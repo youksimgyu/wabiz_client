@@ -86,10 +86,7 @@ class _MyPageState extends State<MyPage> {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            ref
-                                                .read(loginViewModelProvider
-                                                    .notifier)
-                                                .signOut();
+                                            ref.read(loginViewModelProvider.notifier).signOut();
                                             context.pop();
                                           },
                                           child: const Text('확인'),

@@ -78,8 +78,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text(
                                       '카테고리',
@@ -96,20 +95,16 @@ class _AddProjectPageState extends State<AddProjectPage> {
                               Expanded(
                                 child: Consumer(
                                   builder: (context, ref, child) {
-                                    final types =
-                                        ref.watch(fetchProjectTypesProvider);
+                                    final types = ref.watch(fetchProjectTypesProvider);
                                     return types.when(
                                         data: (data) {
                                           return ListView.separated(
                                             itemCount: data.length,
-                                            separatorBuilder:
-                                                (context, index) =>
-                                                    const Divider(),
+                                            separatorBuilder: (context, index) => const Divider(),
                                             itemBuilder: (context, index) {
                                               final value = data[index];
                                               return ListTile(
-                                                leading: SvgPicture.asset(
-                                                    value.imagePath ?? ''),
+                                                leading: SvgPicture.asset(value.imagePath ?? ''),
                                                 title: Text(value.type ?? ''),
                                                 onTap: () {
                                                   setState(() {
@@ -122,12 +117,10 @@ class _AddProjectPageState extends State<AddProjectPage> {
                                           );
                                         },
                                         error: (error, stackTrace) => Center(
-                                              child: Text(
-                                                  'Error: $error, StackTrace: $stackTrace'),
+                                              child: Text('Error: $error, StackTrace: $stackTrace'),
                                             ),
                                         loading: () => const Center(
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: CircularProgressIndicator(),
                                             ));
                                   },
                                 ),
@@ -147,8 +140,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                          '${projectType != null ? projectType?.type : '카테고리 선택'}'),
+                      Text('${projectType != null ? projectType?.type : '카테고리 선택'}'),
                       const Icon(Icons.keyboard_arrow_down),
                     ],
                   ),
@@ -179,8 +171,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         });
                       },
                       title: Text(EnumProjectClass.funding.title ?? ''),
-                      subtitle:
-                          Text(EnumProjectClass.funding.description ?? ''),
+                      subtitle: Text(EnumProjectClass.funding.description ?? ''),
                     ),
                     RadioListTile(
                       value: EnumProjectClass.freeOrder,
@@ -191,8 +182,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         });
                       },
                       title: Text(EnumProjectClass.freeOrder.title ?? ''),
-                      subtitle:
-                          Text(EnumProjectClass.freeOrder.description ?? ''),
+                      subtitle: Text(EnumProjectClass.freeOrder.description ?? ''),
                     ),
                     RadioListTile(
                       value: EnumProjectClass.freeOrderGlobal,
@@ -203,8 +193,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         });
                       },
                       title: Text(EnumProjectClass.freeOrderGlobal.title ?? ''),
-                      subtitle: Text(
-                          EnumProjectClass.freeOrderGlobal.description ?? ''),
+                      subtitle: Text(EnumProjectClass.freeOrderGlobal.description ?? ''),
                     ),
                     RadioListTile(
                       value: EnumProjectClass.freeOrderEncore,
@@ -215,8 +204,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         });
                       },
                       title: Text(EnumProjectClass.freeOrderEncore.title ?? ''),
-                      subtitle: Text(
-                          EnumProjectClass.freeOrderEncore.description ?? ''),
+                      subtitle: Text(EnumProjectClass.freeOrderEncore.description ?? ''),
                     ),
                   ],
                 ),
@@ -340,8 +328,7 @@ class _AddProjectPageState extends State<AddProjectPage> {
                         firstDate: DateTime.now(),
                         lastDate: DateTime(2024, 12, 31),
                       );
-                      deadlineTextEditController.text = DateFormat('yyyy-MM-dd')
-                          .format(date ?? DateTime.now());
+                      deadlineTextEditController.text = DateFormat('yyyy-MM-dd').format(date ?? DateTime.now());
                     },
                     icon: const Icon(Icons.calendar_month),
                   ),
@@ -378,24 +365,17 @@ class _AddProjectPageState extends State<AddProjectPage> {
                 return MaterialButton(
                   onPressed: () async {
                     final _image = await image?.readAsBytes();
-                    final response = await ref
-                        .read(projectViewModelProvider.notifier)
-                        .createProject(
+                    final response = await ref.read(projectViewModelProvider.notifier).createProject(
                           ProjectItemModel(
                             categoryId: 1,
                             projectTypeId: projectType?.id,
                             title: titleTextEditController.text.trim(),
                             owner: makerTextEditController.text.trim(),
                             deadline: deadlineTextEditController.text.trim(),
-                            description:
-                                descriptionTextEditController.text.trim(),
-                            price:
-                                int.parse(priceTextEditController.text.trim()),
+                            description: descriptionTextEditController.text.trim(),
+                            price: int.parse(priceTextEditController.text.trim()),
                             projectClass: enumProjectClass.title,
-                            userId: ref
-                                .read(loginViewModelProvider)
-                                .userid
-                                .toString(),
+                            userId: ref.read(loginViewModelProvider).userid.toString(),
                             projectImage: _image ?? [],
                           ),
                         );

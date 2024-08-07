@@ -30,9 +30,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
     super.initState();
     // 카테고리 페이지 첫 진입 시 프로젝트 목록을 가져옵니다.
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref
-          .read(categoryViewModelProvider.notifier)
-          .fetchProjects(widget.categoryId);
+      ref.read(categoryViewModelProvider.notifier).fetchProjects(widget.categoryId);
     });
   }
 
@@ -66,12 +64,10 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
           SizedBox(
             height: 204,
             child: Consumer(builder: (context, ref, child) {
-              final projects =
-                  ref.watch(fetchCategoryProjectsProvider(widget.categoryId));
+              final projects = ref.watch(fetchCategoryProjectsProvider(widget.categoryId));
               return projects.when(
                 data: (data) {
-                  final titleProject = data
-                      .projects[(Random().nextInt((data.projects.length) - 1))];
+                  final titleProject = data.projects[(Random().nextInt((data.projects.length) - 1))];
                   return Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
@@ -121,8 +117,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                     ),
                   );
                 },
-                error: (error, stackTrace) =>
-                    Center(child: Text(error.toString())),
+                error: (error, stackTrace) => Center(child: Text(error.toString())),
                 loading: () => const Center(child: CircularProgressIndicator()),
               );
             }),
@@ -147,12 +142,8 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                           final tab = data[index];
                           return GestureDetector(
                             onTap: () {
-                              ref
-                                  .read(categoryViewModelProvider.notifier)
-                                  .updateType(tab);
-                              ref
-                                  .read(categoryViewModelProvider.notifier)
-                                  .fetchProjects(widget.categoryId);
+                              ref.read(categoryViewModelProvider.notifier).updateType(tab);
+                              ref.read(categoryViewModelProvider.notifier).fetchProjects(widget.categoryId);
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(left: 32),
@@ -170,17 +161,13 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                       '${tab.type}',
                                       style: TextStyle(
                                         fontWeight:
-                                            vm.selectedType?.type == tab.type
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
+                                            vm.selectedType?.type == tab.type ? FontWeight.bold : FontWeight.normal,
                                       ),
                                     ),
                                     const Gap(12),
                                     Container(
                                       height: 6,
-                                      color: vm.selectedType?.type == tab.type
-                                          ? Colors.black
-                                          : Colors.transparent,
+                                      color: vm.selectedType?.type == tab.type ? Colors.black : Colors.transparent,
                                     ),
                                   ],
                                 ),
@@ -191,8 +178,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                       );
                     });
                   },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
+                  loading: () => const Center(child: CircularProgressIndicator()),
                   error: (error, stackTrace) => Text(error.toString()),
                 );
               },
@@ -205,8 +191,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Consumer(builder: (context, ref, child) {
-                  final projects =
-                      ref.watch(categoryViewModelProvider).projectState;
+                  final projects = ref.watch(categoryViewModelProvider).projectState;
                   return projects.when(
                     data: (data) {
                       if (data.isEmpty) {
@@ -228,9 +213,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                               ),
                               const Gap(24),
                               Consumer(builder: (context, ref, child) {
-                                final filter = ref
-                                    .watch(categoryViewModelProvider)
-                                    .projectFilter;
+                                final filter = ref.watch(categoryViewModelProvider).projectFilter;
                                 return DropdownButton(
                                   value: filter,
                                   items: EnumCategoryProjectType.values.map(
@@ -239,10 +222,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                         value: e,
                                         child: Text(e.value),
                                         onTap: () {
-                                          ref
-                                              .read(categoryViewModelProvider
-                                                  .notifier)
-                                              .updateProjectsFilter(e);
+                                          ref.read(categoryViewModelProvider.notifier).updateProjectsFilter(e);
                                         },
                                       );
                                     },
@@ -275,8 +255,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                           height: 120,
                                           width: 164,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                                            borderRadius: BorderRadius.circular(20),
                                             image: DecorationImage(
                                               image: CachedNetworkImageProvider(
                                                 '${project.thumbnail}',
@@ -293,15 +272,10 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                               Positioned(
                                                 right: 2,
                                                 top: 2,
-                                                child: Consumer(builder:
-                                                    (context, ref, child) {
-                                                  final favorites = ref.watch(
-                                                      favoriteViewModelProvider);
-                                                  final current = favorites
-                                                      .projects
-                                                      .where((element) =>
-                                                          element.id ==
-                                                          project.id)
+                                                child: Consumer(builder: (context, ref, child) {
+                                                  final favorites = ref.watch(favoriteViewModelProvider);
+                                                  final current = favorites.projects
+                                                      .where((element) => element.id == project.id)
                                                       .toList();
                                                   return IconButton(
                                                     onPressed: () {
@@ -310,23 +284,16 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                                           context: context,
                                                           builder: (context) {
                                                             return AlertDialog(
-                                                              content: const Text(
-                                                                  '구독을 취소할까요?'),
+                                                              content: const Text('구독을 취소할까요?'),
                                                               actions: [
                                                                 TextButton(
-                                                                  onPressed:
-                                                                      () {
+                                                                  onPressed: () {
                                                                     ref
-                                                                        .read(favoriteViewModelProvider
-                                                                            .notifier)
-                                                                        .removeItem(
-                                                                            project);
-                                                                    context
-                                                                        .pop();
+                                                                        .read(favoriteViewModelProvider.notifier)
+                                                                        .removeItem(project);
+                                                                    context.pop();
                                                                   },
-                                                                  child:
-                                                                      const Text(
-                                                                          '네'),
+                                                                  child: const Text('네'),
                                                                 ),
                                                               ],
                                                             );
@@ -335,21 +302,12 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                                         return;
                                                       }
 
-                                                      ref
-                                                          .read(
-                                                              favoriteViewModelProvider
-                                                                  .notifier)
-                                                          .addItem(project);
+                                                      ref.read(favoriteViewModelProvider.notifier).addItem(project);
                                                     },
                                                     icon: Icon(
-                                                      current.isNotEmpty
-                                                          ? Icons.favorite
-                                                          : Icons
-                                                              .favorite_border,
+                                                      current.isNotEmpty ? Icons.favorite : Icons.favorite_border,
                                                     ),
-                                                    color: current.isNotEmpty
-                                                        ? Colors.red
-                                                        : Colors.white,
+                                                    color: current.isNotEmpty ? Colors.red : Colors.white,
                                                   );
                                                 }),
                                               ),
@@ -359,8 +317,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                         const Gap(16),
                                         Expanded(
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 '${project.title}',
@@ -372,8 +329,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                                 '${project.owner}',
                                                 style: TextStyle(
                                                   fontSize: 12,
-                                                  color:
-                                                      AppColors.wabizGray[500],
+                                                  color: AppColors.wabizGray[500],
                                                 ),
                                               ),
                                               const Gap(8),
@@ -386,30 +342,21 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                               ),
                                               const Gap(8),
                                               Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 6,
-                                                        vertical: 4),
+                                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                                                 decoration: const BoxDecoration(
                                                   color: AppColors.bg,
                                                 ),
                                                 child: Text(
-                                                    switch (
-                                                        project.totalFunded ??
-                                                            0) {
-                                                      >= 100000000 &&
-                                                            > 10000000 =>
-                                                        '${NumberFormat.currency(
+                                                    switch (project.totalFunded ?? 0) {
+                                                      >= 100000000 && > 10000000 => '${NumberFormat.currency(
                                                           locale: 'ko_KR',
                                                           symbol: '',
                                                         ).format((project.totalFunded ?? 0) ~/ 100000000)}억 원+',
-                                                      >= 10000000 && > 10000 =>
-                                                        '${NumberFormat.currency(
+                                                      >= 10000000 && > 10000 => '${NumberFormat.currency(
                                                           locale: 'ko_KR',
                                                           symbol: '',
                                                         ).format((project.totalFunded ?? 0) ~/ 10000000)}천만 원+',
-                                                      > 10000 =>
-                                                        '${NumberFormat.currency(
+                                                      > 10000 => '${NumberFormat.currency(
                                                           locale: 'ko_KR',
                                                           symbol: '',
                                                         ).format((project.totalFunded ?? 0) ~/ 10000)}만 원+',
@@ -417,8 +364,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                                                     },
                                                     style: const TextStyle(
                                                       fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                      fontWeight: FontWeight.w500,
                                                     )),
                                               ),
                                             ],
@@ -434,10 +380,8 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
                         ],
                       );
                     },
-                    error: (error, stackTrace) =>
-                        Center(child: Text(error.toString())),
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
+                    error: (error, stackTrace) => Center(child: Text(error.toString())),
+                    loading: () => const Center(child: CircularProgressIndicator()),
                   );
                 }),
               ),

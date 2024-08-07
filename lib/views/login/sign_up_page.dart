@@ -80,9 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Consumer(builder: (context, ref, child) {
                       return GestureDetector(
                         onTap: () async {
-                          final result = await ref
-                              .read(loginViewModelProvider.notifier)
-                              .checkEmail(LoginModel(
+                          final result = await ref.read(loginViewModelProvider.notifier).checkEmail(LoginModel(
                                 email: emailController.text.trim(),
                               ));
                           if (context.mounted) {
@@ -234,9 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           username: usernameController.text.trim(),
                           password: passwordController.text.trim(),
                         );
-                        final result = await ref
-                            .read(loginViewModelProvider.notifier)
-                            .singUp(body);
+                        final result = await ref.read(loginViewModelProvider.notifier).singUp(body);
                         if (result) {
                           if (context.mounted) {
                             showDialog(

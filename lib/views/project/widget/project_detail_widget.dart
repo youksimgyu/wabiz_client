@@ -52,8 +52,7 @@ class ProjectWidget extends StatelessWidget {
                   ),
                   const Gap(12),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                     decoration: BoxDecoration(
                       color: AppColors.secondary,
                       borderRadius: BorderRadius.circular(3),
@@ -151,9 +150,7 @@ class BottomAppBarWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favorites = ref.watch(favoriteViewModelProvider);
-    final current = favorites.projects
-        .where((element) => element.id == projectItemModel.id)
-        .toList();
+    final current = favorites.projects.where((element) => element.id == projectItemModel.id).toList();
     return BottomAppBar(
       height: 84,
       color: Colors.white,
@@ -184,9 +181,7 @@ class BottomAppBarWidget extends ConsumerWidget {
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  ref
-                                      .read(favoriteViewModelProvider.notifier)
-                                      .removeItem(
+                                  ref.read(favoriteViewModelProvider.notifier).removeItem(
                                         CategoryItemModel(
                                           id: projectItemModel.id,
                                         ),
@@ -213,9 +208,7 @@ class BottomAppBarWidget extends ConsumerWidget {
                           ),
                         );
                   },
-                  icon: Icon(current.isNotEmpty
-                      ? Icons.favorite
-                      : Icons.favorite_border),
+                  icon: Icon(current.isNotEmpty ? Icons.favorite : Icons.favorite_border),
                   color: current.isNotEmpty ? Colors.red : Colors.black,
                 ),
                 const Text('1만+'),

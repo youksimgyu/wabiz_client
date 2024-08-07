@@ -36,8 +36,7 @@ class HomePage extends StatelessWidget {
                             child: TextFormField(
                               onTap: () {},
                               decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5),
                                   borderSide: BorderSide(
@@ -77,16 +76,13 @@ class HomePage extends StatelessWidget {
                   // 상단
                   Expanded(
                     child: Consumer(
-                      builder:
-                          (BuildContext context, WidgetRef ref, Widget? child) {
-                        final categories =
-                            ref.watch(fetchHomeCategoriesProvider);
+                      builder: (BuildContext context, WidgetRef ref, Widget? child) {
+                        final categories = ref.watch(fetchHomeCategoriesProvider);
                         return categories.when(
                           data: (data) => GridView.builder(
                             itemCount: data.length,
                             scrollDirection: Axis.horizontal,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 0,
@@ -117,10 +113,8 @@ class HomePage extends StatelessWidget {
                               );
                             },
                           ),
-                          error: (error, stackTrace) =>
-                              const Center(child: Text('error')),
-                          loading: () =>
-                              const Center(child: CircularProgressIndicator()),
+                          error: (error, stackTrace) => const Center(child: Text('error')),
+                          loading: () => const Center(child: CircularProgressIndicator()),
                         );
                       },
                     ),
@@ -143,8 +137,7 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: Consumer(
                 builder: (context, ref, child) {
-                  final project =
-                      ref.watch(homeViewModelProvider.notifier).fetchHomeData();
+                  final project = ref.watch(homeViewModelProvider.notifier).fetchHomeData();
                   return FutureBuilder(
                     future: project,
                     builder: (context, snapshot) {
@@ -187,27 +180,20 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    margin: const EdgeInsets.only(
-                                        bottom: 8,
-                                        left: 16,
-                                        right: 16,
-                                        top: 20),
+                                    margin: const EdgeInsets.only(bottom: 8, left: 16, right: 16, top: 20),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           height: 220,
                                           decoration: BoxDecoration(
                                             color: Colors.grey,
-                                            borderRadius:
-                                                const BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(10),
                                               topRight: Radius.circular(10),
                                             ),
                                             image: DecorationImage(
-                                              image: CachedNetworkImageProvider(
-                                                  project.thumbnail ?? ''),
+                                              image: CachedNetworkImageProvider(project.thumbnail ?? ''),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -215,8 +201,7 @@ class HomePage extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.all(16.0),
                                           child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 project.isOpen == "close"
@@ -229,33 +214,24 @@ class HomePage extends StatelessWidget {
                                                 ),
                                               ),
                                               const Gap(8),
-                                              Text(project.title ??
-                                                  '아이돌 관리비법 | 준비 안된 얼굴라인도 살리는 세럼'),
+                                              Text(project.title ?? '아이돌 관리비법 | 준비 안된 얼굴라인도 살리는 세럼'),
                                               const Gap(16),
                                               Text(
                                                 project.owner ?? '세상에 없던 브랜드',
                                                 style: TextStyle(
-                                                  color:
-                                                      AppColors.wabizGray[500]!,
+                                                  color: AppColors.wabizGray[500]!,
                                                 ),
                                               ),
                                               const Gap(16),
                                               Container(
                                                 decoration: BoxDecoration(
                                                   color: AppColors.bg,
-                                                  borderRadius:
-                                                      BorderRadius.circular(3),
+                                                  borderRadius: BorderRadius.circular(3),
                                                 ),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 6,
-                                                        vertical: 4),
+                                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                                                 child: Text(
-                                                  project.isOpen == "close"
-                                                      ? '오픈예정'
-                                                      : '바로구매',
-                                                  style: const TextStyle(
-                                                      fontSize: 10),
+                                                  project.isOpen == "close" ? '오픈예정' : '바로구매',
+                                                  style: const TextStyle(fontSize: 10),
                                                 ),
                                               ),
                                             ],

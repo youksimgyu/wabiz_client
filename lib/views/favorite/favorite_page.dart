@@ -132,16 +132,11 @@ class _FavoritePageState extends State<FavoritePage> {
                                             context: context,
                                             builder: (context) {
                                               return AlertDialog(
-                                                content:
-                                                    const Text("구독을 취소할까요?"),
+                                                content: const Text("구독을 취소할까요?"),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () {
-                                                      ref
-                                                          .read(
-                                                              favoriteViewModelProvider
-                                                                  .notifier)
-                                                          .removeItem(project);
+                                                      ref.read(favoriteViewModelProvider.notifier).removeItem(project);
                                                       context.pop();
                                                     },
                                                     child: const Text("네"),
@@ -192,9 +187,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                       vertical: 4,
                                     ),
                                     child: Text(
-                                      project.isOpen == 'open'
-                                          ? "바로구매"
-                                          : "오픈예정",
+                                      project.isOpen == 'open' ? "바로구매" : "오픈예정",
                                     ),
                                   )
                                 ],

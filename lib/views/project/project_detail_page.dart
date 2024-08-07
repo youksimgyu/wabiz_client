@@ -58,8 +58,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         ],
       ),
       body: Consumer(builder: (context, ref, child) {
-        final project = ref.watch(
-            ProjectDetailViewModelProvider(projectItemModel.id.toString()));
+        final project = ref.watch(ProjectDetailViewModelProvider(projectItemModel.id.toString()));
         return project.when(
           data: (data) {
             return Column(
@@ -88,9 +87,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                           children: [
                             Positioned.fill(
                                 child: SingleChildScrollView(
-                              physics: !value
-                                  ? const NeverScrollableScrollPhysics()
-                                  : const BouncingScrollPhysics(),
+                              physics: !value ? const NeverScrollableScrollPhysics() : const BouncingScrollPhysics(),
                               child: ProjectWidget(projectItemModel: data),
                             )),
                             if (!value)
@@ -134,8 +131,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                                       color: Colors.white,
                                     ),
                                     child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           '스토리 더보기',
@@ -169,8 +165,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           ),
         );
       }),
-      bottomNavigationBar:
-          BottomAppBarWidget(projectItemModel: projectItemModel),
+      bottomNavigationBar: BottomAppBarWidget(projectItemModel: projectItemModel),
     );
   }
 }

@@ -23,8 +23,7 @@ class AddRewardProject extends StatefulWidget {
 class _AddRewardProjectState extends State<AddRewardProject> {
   TextEditingController priceTextEditingController = TextEditingController();
   TextEditingController titleTextEditingController = TextEditingController();
-  TextEditingController descriptionTextEditingController =
-      TextEditingController();
+  TextEditingController descriptionTextEditingController = TextEditingController();
 
   @override
   void dispose() {
@@ -143,21 +142,15 @@ class _AddRewardProjectState extends State<AddRewardProject> {
                     Expanded(child: Consumer(builder: (context, ref, child) {
                       return GestureDetector(
                         onTap: () async {
-                          final result = await ref
-                              .read(projectViewModelProvider.notifier)
-                              .createProjectReward(
-                                  widget.projectId,
-                                  RewardItemModel(
-                                    title:
-                                        titleTextEditingController.text.trim(),
-                                    price: int.parse(
-                                        priceTextEditingController.text.trim()),
-                                    description:
-                                        descriptionTextEditingController.text
-                                            .trim(),
-                                    imageRaw: [],
-                                    imageUrl: '',
-                                  ));
+                          final result = await ref.read(projectViewModelProvider.notifier).createProjectReward(
+                              widget.projectId,
+                              RewardItemModel(
+                                title: titleTextEditingController.text.trim(),
+                                price: int.parse(priceTextEditingController.text.trim()),
+                                description: descriptionTextEditingController.text.trim(),
+                                imageRaw: [],
+                                imageUrl: '',
+                              ));
                           if (result) {
                             if (context.mounted) {
                               showDialog(
