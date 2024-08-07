@@ -16,11 +16,11 @@ class HomeState with _$HomeState {
 
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
-  late HomeRepository homeRepository;
+  late final HomeRepository _homeRepository;
 
   @override
   HomeState? build() {
-    homeRepository = ref.watch(homeRepositoryProvider);
+    _homeRepository = ref.watch(homeRepositoryProvider);
     return null;
   }
 
@@ -29,7 +29,7 @@ class HomeViewModel extends _$HomeViewModel {
   }
 
   Future<HomeModel> fetchHomeData() async {
-    final result = await homeRepository.getHomeProjects();
+    final result = await _homeRepository.getHomeProjects();
     update(result.projects);
     return result;
   }
